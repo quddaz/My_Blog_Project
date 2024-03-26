@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class Member {
   @Id
   public String id;
+
   public String password;
   public String tell;
 

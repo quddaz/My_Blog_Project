@@ -31,7 +31,7 @@ public class Board {
 
   private String categories;
 
-  @OneToMany(mappedBy = "recommend", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
   private List<Recommend> recommendList = new ArrayList<>();
 
   public Board(){};
