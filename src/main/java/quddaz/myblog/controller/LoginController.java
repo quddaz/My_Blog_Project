@@ -11,7 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import quddaz.myblog.domain.DTO.JoinDTO;
+import quddaz.myblog.controller.DTO.JoinDTO;
 import quddaz.myblog.service.MemberService;
 
 @Controller

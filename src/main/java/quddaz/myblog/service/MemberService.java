@@ -1,14 +1,12 @@
 package quddaz.myblog.service;
 
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import quddaz.myblog.domain.DTO.JoinDTO;
+import quddaz.myblog.controller.DTO.JoinDTO;
 import quddaz.myblog.domain.Member;
 import quddaz.myblog.repository.MemberRepository;
 
@@ -37,14 +35,5 @@ public class MemberService {
       return false;
     }
     return !memberRepository.findByUsername(username).isEmpty();
-  }
-
-  public Member findMemberById(String username) {
-    Optional<Member> memberOptional = memberRepository.findByUsername(username);
-    if (memberOptional.isPresent()) {
-      return memberOptional.get();
-    } else {
-      return null;
-    }
   }
 }
