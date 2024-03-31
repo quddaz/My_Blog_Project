@@ -15,6 +15,7 @@ import quddaz.myblog.component.CustomAuthFailureHandler;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
   private final CustomAuthFailureHandler customAuthFailureHandler;
 
   @Bean
