@@ -67,7 +67,7 @@
     <input type="submit" value="Login">
   </form>
   <div th:if="${param.error}">
-    <p id="valid" class="alert alert-danger" th:text="${session.errorMessage}"></p>
+    <p id="valid" class="alert alert-danger" th:text="${session.errorMessage}" style="color: red"></p>
   </div>
   <button onclick="location.href='/join'">회원가입</button>
 </div>

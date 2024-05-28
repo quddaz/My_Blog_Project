@@ -1,4 +1,4 @@
-package quddaz.myblog.domain;
+package quddaz.myblog.Member.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

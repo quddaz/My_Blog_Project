@@ -1,4 +1,4 @@
-package quddaz.myblog.component;
+package quddaz.myblog.Security.component;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

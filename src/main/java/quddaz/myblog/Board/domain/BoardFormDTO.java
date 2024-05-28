@@ -1,4 +1,4 @@
-package quddaz.myblog.domain.DTO;
+package quddaz.myblog.Board.domain;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;

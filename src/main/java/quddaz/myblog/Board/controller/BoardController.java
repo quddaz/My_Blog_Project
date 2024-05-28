@@ -1,4 +1,4 @@
-package quddaz.myblog.controller;
+package quddaz.myblog.Board.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -7,18 +7,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import quddaz.myblog.domain.DTO.BoardFormDTO;
-import quddaz.myblog.service.BoardService;
+import org.springframework.web.bind.annotation.*;
+import quddaz.myblog.Board.domain.Board;
+import quddaz.myblog.Board.domain.BoardFormDTO;
+import quddaz.myblog.Board.service.BoardRepository;
+import quddaz.myblog.Board.service.BoardService;
 
 @Controller
 @RequiredArgsConstructor
 public class BoardController {
   private final BoardService boardService;
-
+  private final BoardRepository boardRepository;
   @GetMapping("/board")
   public String boardMain(Model model){
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -39,5 +38,16 @@ public class BoardController {
     }
     boardService.createBoard(boardFormDTO);
     return "redirect:/board"; // Redirect to the board list page after successful creation
+  }
+  @GetMapping("/board/detail/{id}")
+  public String detailboard(@PathVariable("id") Long id, Model model) {
+    // id를 이용하여 해당 보드를 데이터베이스에서 조회합니다.
+
+    Board board = boardService.increaseView(id);
+    // 모델에 보드 정보를 담아서 뷰로 전달합니다.
+    model.addAttribute("board", board);
+
+    // detailboard.html 뷰로 이동합니다.
+    return "viewboard";
   }
 }

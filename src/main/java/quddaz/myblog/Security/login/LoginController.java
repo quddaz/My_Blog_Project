@@ -1,4 +1,4 @@
-package quddaz.myblog.controller;
+package quddaz.myblog.Security.login;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import quddaz.myblog.domain.DTO.JoinDTO;
-import quddaz.myblog.domain.Member;
-import quddaz.myblog.service.MemberService;
+import quddaz.myblog.Member.domain.Member;
+import quddaz.myblog.Member.service.MemberService;
 
 @Controller
 @Slf4j
