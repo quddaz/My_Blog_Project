@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Board</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+<h1>Update Board</h1>
+<form th:action="@{/board/{id}/update(id=${id})}" method="post" th:object="${boardFormDTO}">
+  <div>
+    <label for="title">Title:</label><br>
+    <input type="text" id="title" name="title" th:field="*{title}" value=""><br>
+  </div>
+  <div>
+    <label for="content">Content:</label><br>
+    <textarea id="content" name="content" rows="4" cols="50" th:field="*{content}"></textarea><br>
+  </div>
+  <div>
+    <button type="submit">Update</button>
+  </div>
+</form>
+<div>
+  <a th:href="@{'/board/' + ${id}}">Cancel</a>
+</div>
+</body>
+</html>

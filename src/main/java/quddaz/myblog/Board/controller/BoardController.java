@@ -38,7 +38,7 @@ public class BoardController {
     return "createboard";
   }
   @PostMapping("/board/create")
-  public String createBoard(@Valid @ModelAttribute("boardFormDTO") BoardFormDTO boardFormDTO, BindingResult bindingResult) {
+  public String createBoard(@ModelAttribute("boardFormDTO") BoardFormDTO boardFormDTO, BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
       return "createboard";
     }
@@ -47,13 +47,25 @@ public class BoardController {
   }
   @GetMapping("/board/{id}")
   public String detailboard(@PathVariable("id") Long id, Model model) {
-
+    boolean isUpdate = boardService.isOwner(id);
     Board board = boardService.increaseView(id);
     List<Comment> comments = commentService.getAllCommentsByBoardId(id);
     model.addAttribute("board", board);
+    model.addAttribute("isUpdate", isUpdate);
     model.addAttribute("comments", comments);
 
-    // detailboard.html 뷰로 이동합니다.
     return "viewboard";
+  }
+  @GetMapping("/board/{id}/update")
+  public String updateboard(@PathVariable("id") Long id, Model model){
+    BoardFormDTO boardFormDTO = new BoardFormDTO();
+    model.addAttribute("id", id);
+    model.addAttribute("boardFormDTO", boardFormDTO);
+    return "updateboard";
+  }
+  @PostMapping("/board/{id}/update")
+  public String update(@PathVariable("id") Long id, @ModelAttribute("boardFormDTO") BoardFormDTO boardFormDTO){
+    boardService.updateBoard(id, boardFormDTO);
+    return "redirect:/board/"+id;
   }
 }

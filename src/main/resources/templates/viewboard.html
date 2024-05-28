@@ -7,6 +7,7 @@
 </head>
 <body>
 <h1>Board Details</h1>
+<a th:if="${isUpdate}" th:href="@{/board/{id}/update(id=${board.id})}">Edit</a>
 <div>
   <p><strong>Title:</strong> [[${board.title}]]</p>
   <p><strong>Description:</strong> [[${board.content}]]</p>

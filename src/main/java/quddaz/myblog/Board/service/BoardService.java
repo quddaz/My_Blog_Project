@@ -42,19 +42,26 @@ public class BoardService {
   }
 
   @Transactional
-  public Board updateBoard(Board updatedBoard) {
+  public Board updateBoard(Long id, BoardFormDTO boardFormDTO) {
     // 엔티티를 가져와서 존재하는지 확인
-    Board existingBoard = boardRepository.findById(updatedBoard.getId()).orElse(null);
+    Board existingBoard = boardRepository.findById(id).orElse(null);
     if (existingBoard == null) {
       // 처리 코드
       throw new RuntimeException("게시물을 찾을 수 없습니다.");
     }
 
-    existingBoard.setTitle(updatedBoard.getTitle());
-    existingBoard.setContent(updatedBoard.getContent());
+    existingBoard.setTitle(boardFormDTO.getTitle());
+    existingBoard.setContent(boardFormDTO.getContent());
     existingBoard.onUpdate();
     return boardRepository.save(existingBoard);
   }
 
+  public boolean isOwner(Long id) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String userName = authentication.getName();
+    Board board = boardRepository.findById(id).orElse(null);
 
+    // 게시판이 존재하고 현재 사용자가 해당 게시판의 작성자인지 확인
+    return board != null && board.getMember().getUserName().equals(userName);
+  }
 }
