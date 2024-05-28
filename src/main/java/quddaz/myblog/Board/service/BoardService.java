@@ -1,10 +1,14 @@
 package quddaz.myblog.Board.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import quddaz.myblog.Board.domain.Board;
 import quddaz.myblog.Board.domain.BoardFormDTO;
+import quddaz.myblog.Member.domain.Member;
+import quddaz.myblog.Member.service.MemberService;
 
 import java.util.List;
 
@@ -13,18 +17,22 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class BoardService {
   private final BoardRepository boardRepository;
-
+  private final MemberService memberService;
   public List<Board> getAllBoards() {
     return boardRepository.findAll();
   }
+  public Board getBoard(Long id){return  boardRepository.getBoardById(id);}
   @Transactional
   public void createBoard(BoardFormDTO boardFormDTO) {
-    Board board = new Board();
-    board.setTitle(boardFormDTO.getTitle());
-    board.setContent(boardFormDTO.getContent());
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String userName = authentication.getName();
+    Member member = memberService.findMemberByUserName(userName).get();
+
+    Board board = boardFormDTO.toEntity();
+    board.setMember(member);
     boardRepository.save(board);
   }
-
+  @Transactional
   public Board increaseView(Long id){
     Board board = boardRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Board not found with id: " + id));

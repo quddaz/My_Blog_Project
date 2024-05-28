@@ -14,10 +14,10 @@
 <table>
   <thead>
   <tr>
-    <th>ID</th>
-    <th>Title</th>
-    <th>Description</th>
-    <th>view</th>
+    <th>번호</th>
+    <th>제목</th>
+    <th>사용자</th>
+    <th>조회수</th>
     <th>날짜</th>
   </tr>
   </thead>
@@ -25,8 +25,8 @@
   <tr th:each="board : ${boardList}">
     <!-- 각 보드의 행에 링크 추가 -->
     <td th:text="${board.id}">1</td>
-    <td><a th:href="@{/board/detail/{id}(id=${board.id})}" th:text="${board.title}">Sample Title</a></td>
-    <td th:text="${board.content}">Sample content</td>
+    <td><a th:href="@{/board/{id}(id=${board.id})}" th:text="${board.title}">Sample Title</a></td>
+    <td th:text="${board.member.getUserName()}">User</td>
     <td th:text="${board.views}">views</td>
     <td th:text="${board.updateTimestamp}">날짜</td>
   </tr>

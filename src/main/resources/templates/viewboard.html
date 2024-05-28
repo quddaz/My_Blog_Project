@@ -14,6 +14,34 @@
   <p><strong>Last Updated:</strong> [[${board.updateTimestamp}]]</p>
 </div>
 <div>
+  <h2>Add a Comment</h2>
+  <form th:action="@{/board/{id}/comment(id=${board.id})}" method="post">
+    <div>
+      <label for="commentContent">Comment:</label><br>
+      <textarea id="commentContent" name="content" rows="4" cols="50"></textarea>
+    </div>
+    <div>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+</div>
+<div>
+  <h2>Comments</h2>
+  <div id="commentSection">
+    <!-- 댓글 목록을 표시할 곳 -->
+    <ul>
+      <!-- 댓글 목록을 반복하여 표시 -->
+      <th:block th:each="comment : ${comments}">
+        <li>
+          <p><strong>Member:</strong> [[${comment.member.userName}]]</p>
+          <p><strong>Content:</strong> [[${comment.content}]]</p>
+          <hr>
+        </li>
+      </th:block>
+    </ul>
+  </div>
+</div>
+<div>
   <a href="/board">Back to Board List</a>
 </div>
 </body>

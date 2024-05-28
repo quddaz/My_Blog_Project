@@ -1,14 +1,16 @@
-package quddaz.myblog.domain;
+package quddaz.myblog.Comment.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import quddaz.myblog.Board.domain.Board;
 import quddaz.myblog.Member.domain.Member;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Comment {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +25,4 @@ public class Comment {
   private Board board;
 
   private String content;
-
-  public Comment(){};
 }

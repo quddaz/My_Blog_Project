@@ -12,12 +12,18 @@ import quddaz.myblog.Board.domain.Board;
 import quddaz.myblog.Board.domain.BoardFormDTO;
 import quddaz.myblog.Board.service.BoardRepository;
 import quddaz.myblog.Board.service.BoardService;
+import quddaz.myblog.Comment.domain.Comment;
+import quddaz.myblog.Comment.service.CommentService;
+import quddaz.myblog.Member.domain.Member;
+import quddaz.myblog.Member.service.MemberService;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class BoardController {
   private final BoardService boardService;
-  private final BoardRepository boardRepository;
+  private final CommentService commentService;
   @GetMapping("/board")
   public String boardMain(Model model){
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -34,18 +40,18 @@ public class BoardController {
   @PostMapping("/board/create")
   public String createBoard(@Valid @ModelAttribute("boardFormDTO") BoardFormDTO boardFormDTO, BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
-      return "createboard"; // Return back to the form if there are validation errors
+      return "createboard";
     }
     boardService.createBoard(boardFormDTO);
-    return "redirect:/board"; // Redirect to the board list page after successful creation
+    return "redirect:/board";
   }
-  @GetMapping("/board/detail/{id}")
+  @GetMapping("/board/{id}")
   public String detailboard(@PathVariable("id") Long id, Model model) {
-    // id를 이용하여 해당 보드를 데이터베이스에서 조회합니다.
 
     Board board = boardService.increaseView(id);
-    // 모델에 보드 정보를 담아서 뷰로 전달합니다.
+    List<Comment> comments = commentService.getAllCommentsByBoardId(id);
     model.addAttribute("board", board);
+    model.addAttribute("comments", comments);
 
     // detailboard.html 뷰로 이동합니다.
     return "viewboard";
