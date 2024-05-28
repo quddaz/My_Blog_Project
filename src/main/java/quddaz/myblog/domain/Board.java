@@ -29,8 +29,6 @@ public class Board {
 
   private Timestamp updateTimestamp;
 
-  private String categories;
-
   @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
   private List<Recommend> recommendList = new ArrayList<>();
 

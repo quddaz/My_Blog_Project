@@ -1,12 +1,10 @@
 package quddaz.myblog.service;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import quddaz.myblog.controller.DTO.JoinDTO;
 import quddaz.myblog.domain.Member;
 import quddaz.myblog.repository.MemberRepository;
 
@@ -21,19 +19,22 @@ public class MemberService {
   private final PasswordEncoder passwordEncoder;
 
   @Transactional // 쓰기 작업에 대한 트랜잭션 적용
-  public void join(JoinDTO joinDTO){
-    Member member = new Member();
-    member.setUsername(joinDTO.getUsername());
-    member.setPassword(passwordEncoder.encode(joinDTO.getPassword()));
-    member.setTell(joinDTO.getTell());
-
+  public void join(Member member){
+    member.setPassword(passwordEncoder.encode(member.getPassword()));
     memberRepository.save(member);
   }
 
-  public boolean validateDuplicateMember(String username) {
-    if (username == null) {
-      return false;
-    }
-    return !memberRepository.findByUsername(username).isEmpty();
+  /**
+   * 회원가입 시 동일한 회원 아이디가 있는지 검사합니다.
+   * @param userName
+   * @return
+   */
+  public boolean checkDuplicateUsername(String userName){
+    Member member = memberRepository.findByUserName(userName);
+    return member != null;
+  }
+
+  public Optional<Member> findMemberByUserName(String userName) {
+    return Optional.ofNullable(memberRepository.findByUserName(userName));
   }
 }
